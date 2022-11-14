@@ -20,6 +20,11 @@ builder.Services.AddApiVersioning(options =>{
 });
 builder.Services.AddMvc(options => {
     options.Filters.Add<JsonExceptionFilter>();
+    options.Filters.Add<RequiredHttpsOrCloseAttribute>();
+});
+
+builder.Services.AddCors(options=>{
+    options.AddPolicy("AllowOrigins", policy=> policy.AllowAnyOrigin());
 });
 
 var app = builder.Build();
@@ -31,7 +36,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowOrigin");
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
