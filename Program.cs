@@ -1,15 +1,30 @@
 using API.Filter;
+using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore;
+using API.Repository;
+using Microsoft.Extensions.Configuration;
+using API;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddDbContext<LandonContext>(options =>{
+    options.UseInMemoryDatabase("landon");
+});
 
+builder.Services.AddScoped<IService, Service>();
+
+// Add services to the container.
+builder.Services.Configure<HotelInfo>(builder.Configuration.GetSection(HotelInfo.Info));
 builder.Services.AddControllers();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 //Versioning API
 builder.Services.AddApiVersioning(options =>{
     options.DefaultApiVersion = new ApiVersion(1,0);
@@ -18,6 +33,8 @@ builder.Services.AddApiVersioning(options =>{
     options.ReportApiVersions = true;
     options.ApiVersionSelector = new CurrentImplementationApiVersionSelector(options);
 });
+
+//Adding Filters
 builder.Services.AddMvc(options => {
     options.Filters.Add<JsonExceptionFilter>();
     options.Filters.Add<RequiredHttpsOrCloseAttribute>();

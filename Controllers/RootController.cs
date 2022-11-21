@@ -15,11 +15,16 @@ public class RootController : ControllerBase
             href = Url.Link(nameof(GetRoot),null),
             rooms = new {
                 href = Url.Link(nameof(RoomController.GetRooms), null)
+            },
+            info= new{
+                href = Url.Link(nameof(InfoController.GetInfo),null)
             }
         };
+    
 
         return Ok(response);
 
     }
+
     
 }
