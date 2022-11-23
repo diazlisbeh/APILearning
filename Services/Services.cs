@@ -2,11 +2,11 @@ using API.Models;
 
 namespace API.Services
 {
-    public class Services
+    public class Service : IService
     {
         private readonly LandonContext _context;
 
-        public Services(LandonContext context){
+        public Service(LandonContext context){
             _context = context;
         }
 

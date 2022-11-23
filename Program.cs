@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using API.Repository;
 using Microsoft.Extensions.Configuration;
-using API;
+using API.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);

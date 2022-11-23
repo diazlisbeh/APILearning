@@ -8,11 +8,12 @@ namespace API.Models
 
         public LandonContext(DbContextOptions options) : base(options){}
 
-        public DbSet<RoomEntity> Rooms {get;set;}
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
+            // optionsBuilder.UseInMemoryDatabase("landon");
+        // }
 
-        protected void OnModelCreating(ModelBuilder model){
-            model.Entity<RoomEntity>().HasData(
-                
+        public DbSet<RoomEntity> Rooms {get;set;}
+            List<RoomEntity> list = new List<RoomEntity>(){
             new RoomEntity {
                 Id = Guid.NewGuid(),
                 Name = "Oxford Suite",
@@ -22,7 +23,19 @@ namespace API.Models
                 Id = Guid.NewGuid(),
                 Name = "Boston Suite",
                 Rate = 13431
+            }
+            };
+
+        protected void OnModelCreating(ModelBuilder model){
+            
+            model.Entity<RoomEntity>(room => {
+                room.HasData(list);
+                
             });
+            
+            
+            
+            
             
         }
     }

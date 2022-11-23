@@ -1,6 +1,7 @@
 
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using API.Services;
 
 namespace API.Controllers;
 
@@ -8,16 +9,14 @@ namespace API.Controllers;
 [ApiController]
 public class RoomController : ControllerBase
 {
-    private SeedData _repository;
-    public RoomController ( SeedData repository){
-        _repository = repository;
+    private IService _service;
+    public RoomController (IService service){
+        _service = service;
     }
     [HttpGet(Name = nameof(GetRooms))]
     public IActionResult GetRooms()
     {
-        throw new NotImplementedException();
-        // return _repository.InitilizeAsync();
-       
+      return Ok(_service.getAll()); 
     }
 
     
